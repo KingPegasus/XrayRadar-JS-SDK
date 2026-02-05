@@ -16,16 +16,16 @@ JavaScript/TypeScript SDK for [XrayRadar](https://github.com/xrayradar/xrayradar
 
 ```bash
 # Node.js
-pnpm add @xrayradar/node
+npm install @xrayradar/node
 
 # Browser only
-pnpm add @xrayradar/browser
+npm install @xrayradar/browser
 
 # React
-pnpm add @xrayradar/react
+npm install @xrayradar/react
 
 # Next.js (includes node + react)
-pnpm add @xrayradar/nextjs
+npm install @xrayradar/nextjs
 ```
 
 ## Quick start
@@ -54,15 +54,14 @@ init({ dsn: "https://your-server.com/your_project_id", authToken: "your-token" }
 
 Events are sent to `POST /api/{project_id}/store/` with header `X-Xrayradar-Token`. See the [server API](https://github.com/xrayradar/xrayradar-server) and [Python SDK](https://github.com/xrayradar/xrayradar) for the same contract.
 
-## Build and test
+## Requirements
 
-```bash
-pnpm install
-pnpm build
-pnpm test
-pnpm lint
-```
+Node 18+ for the Node/Next.js packages; modern browsers (ES2020) for the browser/React packages. React 17+ and Next.js 13+ where applicable.
 
-## Publish (npm)
+## Examples
 
-Scoped packages are published under `@xrayradar/*`. Configure npm auth and run from each package or use a workspace publish script.
+Runable examples (Node CLI, Vite + React, Next.js) are in [examples/](examples/). Build the repo once (`npm run build`), then see [examples/README.md](examples/README.md) for how to run each.
+
+---
+
+Contributing (build, test, versioning, releases): see [CONTRIBUTING.md](CONTRIBUTING.md).

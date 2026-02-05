@@ -1,0 +1,11 @@
+{
+  "name": "xrayradar-node-basic-example",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@xrayradar/node": "file:../../packages/node"
+  }
+}
