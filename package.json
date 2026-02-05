@@ -1,0 +1,24 @@
+{
+  "name": "xrayradar-js",
+  "version": "0.1.0",
+  "private": true,
+  "description": "XrayRadar JavaScript/TypeScript SDK monorepo (Node, Browser, React, Next.js)",
+  "scripts": {
+    "build": "npm run build -w @xrayradar/core && npm run build -w @xrayradar/node && npm run build -w @xrayradar/browser && npm run build -w @xrayradar/react && npm run build -w @xrayradar/nextjs",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "eslint .",
+    "clean": "npm run clean --workspaces --if-present"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "vitest": "^2.0.0",
+    "eslint": "^9.0.0",
+    "@eslint/js": "^9.0.0",
+    "typescript-eslint": "^8.0.0",
+    "@types/node": "^20.10.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "workspaces": ["packages/*"]
+}
