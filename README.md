@@ -56,12 +56,12 @@ Events are sent to `POST /api/{project_id}/store/` with header `X-Xrayradar-Toke
 
 ## Requirements
 
-Node 18+ for the Node/Next.js packages; modern browsers (ES2020) for the browser/React packages. React 17+ and Next.js 13+ where applicable.
+Node 20+ for the Node/Next.js packages; modern browsers (ES2020) for the browser/React packages. React 17+ and Next.js 13+ where applicable.
 
 ## Examples
 
 Runable examples (Node CLI, Vite + React, Next.js) are in [examples/](examples/). Build the repo once (`npm run build`), then see [examples/README.md](examples/README.md) for how to run each.
 
----
+For security practices, audit, and reporting vulnerabilities: see [SECURITY.md](SECURITY.md).
 
 Contributing (build, test, versioning, releases): see [CONTRIBUTING.md](CONTRIBUTING.md).

@@ -7,18 +7,19 @@
     "build": "npm run build -w @xrayradar/core && npm run build -w @xrayradar/node && npm run build -w @xrayradar/browser && npm run build -w @xrayradar/react && npm run build -w @xrayradar/nextjs",
     "test": "npm run test --workspaces --if-present",
     "lint": "eslint .",
+    "audit": "./scripts/security_audit.sh",
     "clean": "npm run clean --workspaces --if-present"
   },
   "devDependencies": {
     "typescript": "^5.6.0",
-    "vitest": "^2.1.0",
+    "vitest": "^4.0.0",
     "eslint": "^9.0.0",
     "@eslint/js": "^9.0.0",
     "typescript-eslint": "^8.0.0",
     "@types/node": "^20.10.0"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "workspaces": ["packages/*"]
 }

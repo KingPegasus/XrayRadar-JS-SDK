@@ -11,11 +11,9 @@ npm run lint
 
 ## Compatibility
 
-- **Node:** `>=18` (LTS). CI runs on Node 24; the SDK is tested on Node 18+.
+- **Node:** `>=20` (LTS). CI runs on Node 24; the SDK is tested on Node 20+.
 - **Browsers:** Output is ES2020; works in current Chrome, Firefox, Safari, Edge and other ES2020‑capable environments.
 - **React:** `>=17` (peer). Next.js: `>=13` (peer).
-
-We keep Node 18 as the minimum to support a wide audience (LTS and many hosted runtimes).
 
 ## Versioning and releases
 
