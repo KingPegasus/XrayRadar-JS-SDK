@@ -8,6 +8,12 @@ export default [
     ignores: ["**/dist/**", "**/node_modules/**", "examples/**"],
   },
   {
+    files: ["scripts/**/*.mjs"],
+    languageOptions: {
+      globals: { console: "readonly", process: "readonly" },
+    },
+  },
+  {
     files: ["**/*.ts", "**/*.tsx"],
     languageOptions: {
       parserOptions: { ecmaVersion: "latest", sourceType: "module" },

@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-/* eslint-env node */
 /**
  * Syncs the root package.json version to all workspace packages.
  * Run after `npm version patch|minor|major` so all packages share the same version.
