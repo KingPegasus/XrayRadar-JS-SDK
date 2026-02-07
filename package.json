@@ -25,6 +25,10 @@
   "workspaces": [
     "packages/*"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KingPegasus/XrayRadar-JS-SDK.git"
+  },
   "publishConfig": {
     "access": "public"
   }
