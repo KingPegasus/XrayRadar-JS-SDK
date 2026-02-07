@@ -1,6 +1,6 @@
 # xrayradar-js
 
-JavaScript/TypeScript SDK for [XrayRadar](https://github.com/xrayradar/xrayradar-server) error tracking. Supports Node.js, browser, React, and Next.js.
+JavaScript/TypeScript SDK for [XrayRadar](https://github.com/xrayradar/xrayradar-server) error tracking. Supports Node.js, browser, React, Next.js, and Remix.
 
 ## Packages
 
@@ -26,6 +26,9 @@ npm install @xrayradar/react
 
 # Next.js (includes node + react)
 npm install @xrayradar/nextjs
+
+# Remix (use node + react; see Quick start > Remix)
+npm install @xrayradar/node @xrayradar/react
 ```
 
 ## Quick start
@@ -53,6 +56,53 @@ init({ dsn: "https://your-server.com/your_project_id", authToken: "your-token" }
 ```
 
 Events are sent to `POST /api/{project_id}/store/` with header `X-Xrayradar-Token`. See the [server API](https://github.com/xrayradar/xrayradar-server) and [Python SDK](https://github.com/xrayradar/xrayradar) for the same contract.
+
+### Remix
+
+Use **@xrayradar/node** on the server and **@xrayradar/react** on the client. No separate Remix package is required.
+
+**Server:** In your Remix server entry (e.g. the Node file that runs the app, or `entry.server.tsx` if you use `handleError`), init the Node SDK once:
+
+```ts
+import { init, captureException } from "@xrayradar/node";
+
+init({
+  dsn: process.env.XRAYRADAR_DSN!,
+  authToken: process.env.XRAYRADAR_AUTH_TOKEN,
+  environment: process.env.XRAYRADAR_ENVIRONMENT,
+  release: process.env.XRAYRADAR_RELEASE,
+});
+// In handleError (if you use a custom entry.server): captureException(error);
+```
+
+**Client:** In `app/root.tsx`, init the browser SDK and wrap the app in `ErrorBoundary`:
+
+```tsx
+import { init, ErrorBoundary } from "@xrayradar/react";
+
+if (typeof window !== "undefined") {
+  init({
+    dsn: process.env.XRAYRADAR_DSN!,  // or a public env your build inlines
+    authToken: process.env.XRAYRADAR_AUTH_TOKEN,
+  });
+}
+
+export default function App() {
+  return (
+    <html>
+      <head>...</head>
+      <body>
+        <ErrorBoundary>
+          <Outlet />
+        </ErrorBoundary>
+        <Scripts />
+      </body>
+    </html>
+  );
+}
+```
+
+Set `XRAYRADAR_DSN` and `XRAYRADAR_AUTH_TOKEN` in your environment; use a public env (e.g. Vite’s `import.meta.env`) for client-side DSN if your stack exposes it.
 
 ## Requirements
 

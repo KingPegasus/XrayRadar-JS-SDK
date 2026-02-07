@@ -1,11 +1,18 @@
-# Optional: publish to npm on release.
-# Requires NPM_TOKEN secret. Trigger: push tag v* (e.g. v0.1.0)
+# Publish to npm on release.
+# First publish: add NPM_TOKEN secret (Automation token from npmjs.com), then create a Release.
+# After packages exist: add Trusted Publisher on each package's npm page (Settings → Trusted Publisher:
+#   GitHub org/user, repo, workflow filename: publish.yml). Then you can remove NPM_TOKEN.
+# Trigger: GitHub Release published or workflow_dispatch.
 name: Publish
 
 on:
   release:
     types: [published]
   workflow_dispatch:
+
+permissions:
+  id-token: write   # For Trusted Publishing (OIDC) once configured on npm
+  contents: read
 
 jobs:
   publish:
