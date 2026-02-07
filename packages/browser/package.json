@@ -1,6 +1,6 @@
 {
   "name": "@xrayradar/browser",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "XrayRadar SDK for browser",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -12,7 +12,9 @@
       "require": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts --clean",
     "test": "vitest run --passWithNoTests",
