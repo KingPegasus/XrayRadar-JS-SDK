@@ -5,11 +5,14 @@ import {
   shouldSample,
   normalizeLevel,
   type ClientOptions,
+  type CaptureContextOptions,
+  type BrowserIntegrationsOptions,
   type EventPayload,
   type Level,
   type Transport,
 } from "@xrayradar/core";
 import { HttpTransport } from "./transport.js";
+import { instrumentConsole, instrumentFetch, instrumentHistory, instrumentXhr, type Uninstall } from "./integrations/index.js";
 
 declare let globalThis: { XRAYRADAR_AUTH_TOKEN?: string };
 
@@ -35,6 +38,7 @@ export class BrowserClient {
   private _enabled: boolean;
   private _onError: ((event: ErrorEvent) => void) | null = null;
   private _onUnhandledRejection: ((event: PromiseRejectionEvent) => void) | null = null;
+  private _uninstallIntegrations: Uninstall[] = [];
 
   constructor(options: ClientOptions = {}) {
     this.scope = new Scope();
@@ -67,20 +71,28 @@ export class BrowserClient {
     if (this._enabled && this.options.dsn && !options.transport) {
       this._installGlobalHandlers();
     }
+    if (this._enabled && options.integrations) {
+      const integrations =
+        options.integrations === true
+          ? { fetch: true, xhr: true, history: true, console: true }
+          : options.integrations;
+      this._installIntegrations(integrations);
+    }
   }
 
   captureException(
     error: Error,
-    options?: { level?: Level; message?: string }
+    options?: { level?: Level; message?: string } & CaptureContextOptions
   ): string | null {
     if (!this._enabled) return null;
     if (!shouldSample(this.options.sampleRate)) return null;
     const level = options?.level ?? "error";
+    const scope = options?.context || options?.breadcrumbs ? this._scopeForCapture(options) : this.scope;
     let payload = eventFromException(
       error,
       level,
       options?.message,
-      this.scope
+      scope
     );
     const after = this.options.beforeSend(payload);
     if (after === null) return null;
@@ -100,12 +112,13 @@ export class BrowserClient {
 
   captureMessage(
     message: string,
-    options?: { level?: Level }
+    options?: { level?: Level } & CaptureContextOptions
   ): string | null {
     if (!this._enabled) return null;
     if (!shouldSample(this.options.sampleRate)) return null;
     const level = normalizeLevel(options?.level ?? "error");
-    let payload = eventFromMessage(message, level, this.scope);
+    const scope = options?.context || options?.breadcrumbs ? this._scopeForCapture(options) : this.scope;
+    let payload = eventFromMessage(message, level, scope);
     const after = this.options.beforeSend(payload);
     if (after === null) return null;
     const applyAndSend = (resolved: EventPayload) => {
@@ -162,6 +175,33 @@ export class BrowserClient {
     this.flush();
     if (this._transport.close) this._transport.close();
     this._removeGlobalHandlers();
+    for (const u of this._uninstallIntegrations) u();
+    this._uninstallIntegrations = [];
+  }
+
+  private _scopeForCapture(options?: CaptureContextOptions): Scope {
+    const s = this.scope.clone();
+    if (options?.context) s.applyToContext(options.context);
+    if (options?.breadcrumbs) {
+      for (const b of options.breadcrumbs) {
+        s.addBreadcrumb(b.message, {
+          category: b.category,
+          level: b.level,
+          data: b.data,
+          type: b.type,
+          timestamp: b.timestamp,
+        });
+      }
+    }
+    return s;
+  }
+
+  private _installIntegrations(integrations: BrowserIntegrationsOptions): void {
+    if (!integrations) return;
+    if (integrations.fetch) this._uninstallIntegrations.push(instrumentFetch(this, integrations.fetch));
+    if (integrations.xhr) this._uninstallIntegrations.push(instrumentXhr(this, integrations.xhr));
+    if (integrations.history) this._uninstallIntegrations.push(instrumentHistory(this, integrations.history));
+    if (integrations.console) this._uninstallIntegrations.push(instrumentConsole(this, integrations.console));
   }
 
   private _installGlobalHandlers(): void {

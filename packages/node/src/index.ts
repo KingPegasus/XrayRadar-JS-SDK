@@ -14,3 +14,4 @@ export {
 export { HttpTransport } from "./transport.js";
 export { parseDsn } from "./dsn.js";
 export type { DsnParts } from "./dsn.js";
+export { expressRequestHandler, expressErrorHandler, koaMiddleware } from "./middleware/index.js";

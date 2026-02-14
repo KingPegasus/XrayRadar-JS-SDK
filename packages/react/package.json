@@ -1,7 +1,18 @@
 {
   "name": "@xrayradar/react",
-  "version": "0.1.1",
-  "description": "XrayRadar SDK for React – ErrorBoundary, hooks, provider",
+  "version": "0.2.0",
+  "description": "XrayRadar SDK for React - ErrorBoundary, hooks, provider",
+  "keywords": [
+    "xrayradar",
+    "error-tracking",
+    "observability",
+    "monitoring",
+    "sdk",
+    "react",
+    "error-boundary",
+    "javascript",
+    "typescript"
+  ],
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -18,8 +29,12 @@
   "scripts": {
     "build": "tsup src/index.tsx --format cjs,esm --dts --clean",
     "test": "vitest run --passWithNoTests",
+    "test:coverage": "vitest run --coverage --passWithNoTests",
     "lint": "eslint src",
     "clean": "rm -rf dist"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "peerDependencies": {
     "react": ">=17.0.0"

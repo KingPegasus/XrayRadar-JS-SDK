@@ -75,6 +75,23 @@ export class Scope {
     return { ...this._context };
   }
 
+  clone(): Scope {
+    const next = new Scope();
+    next.maxBreadcrumbs = this.maxBreadcrumbs;
+    // Copy context + breadcrumbs for request-local captures.
+    next.applyToContext(this.getContext());
+    for (const b of this.getBreadcrumbs()) {
+      next.addBreadcrumb(b.message, {
+        category: b.category,
+        level: b.level,
+        data: b.data,
+        type: b.type,
+        timestamp: b.timestamp,
+      });
+    }
+    return next;
+  }
+
   applyToContext(overrides: Partial<EventContexts>): void {
     if (overrides.user !== undefined) this._context.user = overrides.user;
     if (overrides.request !== undefined) this._context.request = overrides.request;

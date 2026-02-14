@@ -43,4 +43,52 @@ describe("Scope", () => {
     expect(ctx.tags?.k).toBe("v");
     expect(ctx.extra?.x).toBe(42);
   });
+
+  it("setRequest", () => {
+    const scope = new Scope();
+    scope.setRequest({ method: "GET", url: "/api" });
+    const ctx = scope.getContext();
+    expect(ctx.request?.method).toBe("GET");
+    expect(ctx.request?.url).toBe("/api");
+    scope.setRequest(null);
+    expect(scope.getContext().request).toBeUndefined();
+  });
+
+  it("setContext with user, request, and other keys", () => {
+    const scope = new Scope();
+    scope.setContext("user", { id: "u1", email: "u@x.com" });
+    scope.setContext("request", { method: "POST", url: "/submit" });
+    scope.setContext("custom", { foo: "bar" });
+    const ctx = scope.getContext();
+    expect(ctx.user?.id).toBe("u1");
+    expect(ctx.request?.method).toBe("POST");
+    expect(ctx.extra?.custom).toEqual({ foo: "bar" });
+  });
+
+  it("clone copies context, breadcrumbs with all options", () => {
+    const scope = new Scope();
+    scope.setUser({ id: "1" });
+    scope.setTag("t", "v");
+    scope.addBreadcrumb("crumb", {
+      category: "cat",
+      level: "info",
+      data: { k: 1 },
+      type: "http",
+      timestamp: "2020-01-01T00:00:00.000Z",
+    });
+    const cloned = scope.clone();
+    const ctx = cloned.getContext();
+    expect(ctx.user?.id).toBe("1");
+    expect(ctx.tags?.t).toBe("v");
+    const crumbs = cloned.getBreadcrumbs();
+    expect(crumbs).toHaveLength(1);
+    expect(crumbs[0]).toMatchObject({
+      message: "crumb",
+      category: "cat",
+      level: "info",
+      data: { k: 1 },
+      type: "http",
+      timestamp: "2020-01-01T00:00:00.000Z",
+    });
+  });
 });

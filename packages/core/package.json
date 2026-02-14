@@ -1,7 +1,16 @@
 {
   "name": "@xrayradar/core",
-  "version": "0.1.1",
-  "description": "XrayRadar SDK core – types, scope, breadcrumbs, transport interface",
+  "version": "0.2.0",
+  "description": "XrayRadar SDK core - types, scope, breadcrumbs, transport interface",
+  "keywords": [
+    "xrayradar",
+    "error-tracking",
+    "observability",
+    "monitoring",
+    "sdk",
+    "breadcrumbs",
+    "typescript"
+  ],
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -18,8 +27,12 @@
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts --clean",
     "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
     "lint": "eslint src",
     "clean": "rm -rf dist"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "devDependencies": {
     "tsup": "^8.0.0",

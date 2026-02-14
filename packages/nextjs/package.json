@@ -1,7 +1,19 @@
 {
   "name": "@xrayradar/nextjs",
-  "version": "0.1.1",
-  "description": "XrayRadar SDK for Next.js – server + client setup",
+  "version": "0.2.0",
+  "description": "XrayRadar SDK for Next.js - server + client setup",
+  "keywords": [
+    "xrayradar",
+    "error-tracking",
+    "observability",
+    "monitoring",
+    "sdk",
+    "nextjs",
+    "next",
+    "react",
+    "javascript",
+    "typescript"
+  ],
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -19,8 +31,12 @@
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts --clean",
     "test": "vitest run --passWithNoTests",
+    "test:coverage": "vitest run --coverage --passWithNoTests",
     "lint": "eslint src",
     "clean": "rm -rf dist"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "dependencies": {
     "@xrayradar/node": "*",
