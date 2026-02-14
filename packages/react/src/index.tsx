@@ -14,5 +14,6 @@ export {
   setTag,
   setExtra,
   setContext,
+  parseDsn,
 } from "@xrayradar/browser";
 export type { BrowserClient } from "@xrayradar/browser";

@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { init, captureException, ErrorBoundary } from "@xrayradar/react";
 import App from "./App";
 
-const dsn = import.meta.env.VITE_XRAYRADAR_DSN || "https://your-server.com/your_project_id";
+const dsn = import.meta.env.VITE_XRAYRADAR_DSN || "https://xrayradar.com/your_project_id";
 const authToken = import.meta.env.VITE_XRAYRADAR_AUTH_TOKEN || "";
 
 init({

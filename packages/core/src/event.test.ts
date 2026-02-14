@@ -30,6 +30,25 @@ describe("eventFromException", () => {
     expect(payload.breadcrumbs[0].message).toBe("step");
     expect(payload.contexts.tags?.env).toBe("test");
   });
+
+  it("parses stack lines in file:line:col format (no function name)", () => {
+    const err = new Error("stack format");
+    err.stack =
+      "Error: stack format\n    at /home/app/src/foo.ts:10:5\n    at /home/app/src/bar.ts:20:3";
+    const payload = eventFromException(err, "error");
+    expect(payload.exception?.values[0].stacktrace.frames).toHaveLength(2);
+    expect(payload.exception?.values[0].stacktrace.frames[0]).toMatchObject({
+      filename: "/home/app/src/bar.ts",
+      function: "?",
+      lineno: 20,
+      colno: 3,
+    });
+    expect(payload.exception?.values[0].stacktrace.frames[1]).toMatchObject({
+      filename: "/home/app/src/foo.ts",
+      lineno: 10,
+      colno: 5,
+    });
+  });
 });
 
 describe("eventFromMessage", () => {

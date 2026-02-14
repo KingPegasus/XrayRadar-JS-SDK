@@ -34,15 +34,15 @@ npm start
 
 ```bash
 # Option 1: Export before running
-export XRAYRADAR_DSN="http://xrayradar.com/your_project_id"
+export XRAYRADAR_DSN="https://xrayradar.com/your_project_id"
 export XRAYRADAR_AUTH_TOKEN="your_token_here"
 npm start
 
 # Option 2: Inline
-XRAYRADAR_DSN="http://xrayradar.com/your_project_id" XRAYRADAR_AUTH_TOKEN="your_token" npm start
+XRAYRADAR_DSN="https://xrayradar.com/your_project_id" XRAYRADAR_AUTH_TOKEN="your_token" npm start
 
 # Option 3: Create .env file (if using dotenv)
-XRAYRADAR_DSN=http://xrayradar.com/your_project_id
+XRAYRADAR_DSN=https://xrayradar.com/your_project_id
 XRAYRADAR_AUTH_TOKEN=your_token
 ```
 
@@ -68,6 +68,12 @@ VITE_XRAYRADAR_AUTH_TOKEN=your_token
 ```
 
 **Note:** Vite requires the `VITE_` prefix for client-accessible env vars. Restart the dev server after changing `.env`.
+
+### Optional: enable integrations
+
+You can enable browser integrations (fetch/XHR/history/console breadcrumbs) in the example by passing:
+
+- `integrations: true`
 
 ## Next.js
 

@@ -18,7 +18,7 @@ import {
   getClient,
 } from "@xrayradar/node";
 
-const dsn = process.env.XRAYRADAR_DSN || "https://your-server.com/your_project_id";
+const dsn = process.env.XRAYRADAR_DSN || "https://xrayradar.com/your_project_id";
 const authToken = process.env.XRAYRADAR_AUTH_TOKEN || "";
 
 init({

@@ -1,4 +1,7 @@
-# xrayradar-js
+# XrayRadar-JS-SDK
+
+[![CI](https://img.shields.io/github/actions/workflow/status/KingPegasus/XrayRadar-JS-SDK/ci.yml?label=CI&style=flat-square)](https://github.com/KingPegasus/XrayRadar-JS-SDK/actions/workflows/ci.yml)
+![Node](https://img.shields.io/badge/node-%3E%3D20-brightgreen?style=flat-square)
 
 JavaScript/TypeScript SDK for [XrayRadar](https://github.com/xrayradar/xrayradar-server) error tracking. Supports Node.js, browser, React, Next.js, and Remix.
 
@@ -38,7 +41,7 @@ npm install @xrayradar/node @xrayradar/react
 ```ts
 import { init, captureException } from "@xrayradar/node";
 
-init({ dsn: "https://your-server.com/your_project_id", authToken: "your-token" });
+init({ dsn: "https://xrayradar.com/your_project_id", authToken: "your-token" });
 captureException(new Error("Something broke"));
 ```
 
@@ -48,7 +51,7 @@ captureException(new Error("Something broke"));
 import { init, captureException } from "@xrayradar/browser"; // or @xrayradar/react
 import { ErrorBoundary } from "@xrayradar/react";
 
-init({ dsn: "https://your-server.com/your_project_id", authToken: "your-token" });
+init({ dsn: "https://xrayradar.com/your_project_id", authToken: "your-token" });
 
 <ErrorBoundary>
   <App />
@@ -56,6 +59,76 @@ init({ dsn: "https://your-server.com/your_project_id", authToken: "your-token" }
 ```
 
 Events are sent to `POST /api/{project_id}/store/` with header `X-Xrayradar-Token`. See the [server API](https://github.com/xrayradar/xrayradar-server) and [Python SDK](https://github.com/xrayradar/xrayradar) for the same contract.
+
+## Browser auto-instrumentation (integrations)
+
+By default, the browser SDK auto-captures:
+
+- `window.error`
+- `window.unhandledrejection`
+
+Optionally, you can enable additional **auto-instrumentation** (breadcrumbs + optional auto-capture for failures) via `integrations`.
+
+Enable everything (safe defaults) with one flag:
+
+```ts
+import { init } from "@xrayradar/browser";
+
+init({
+  dsn: "https://xrayradar.com/your_project_id",
+  authToken: "your-token",
+  integrations: true, // fetch + XHR + history + console
+});
+```
+
+Or configure each integration:
+
+```ts
+init({
+  dsn: "https://xrayradar.com/your_project_id",
+  authToken: "your-token",
+  integrations: {
+    fetch: { breadcrumbs: true, captureErrors: true },
+    xhr: { breadcrumbs: true, captureErrors: true },
+    history: true,
+    console: true,
+  },
+});
+```
+
+## Node middleware helpers (Express/Koa)
+
+`@xrayradar/node` includes optional helpers for popular frameworks.
+
+**Express:**
+
+```ts
+import express from "express";
+import { init, getClient, expressRequestHandler, expressErrorHandler } from "@xrayradar/node";
+
+init({ dsn: process.env.XRAYRADAR_DSN!, authToken: process.env.XRAYRADAR_AUTH_TOKEN });
+const client = getClient()!;
+
+const app = express();
+app.use(expressRequestHandler(client));
+
+// ... routes ...
+
+app.use(expressErrorHandler(client)); // must be after routes
+```
+
+**Koa:**
+
+```ts
+import Koa from "koa";
+import { init, getClient, koaMiddleware } from "@xrayradar/node";
+
+init({ dsn: process.env.XRAYRADAR_DSN!, authToken: process.env.XRAYRADAR_AUTH_TOKEN });
+const client = getClient()!;
+
+const app = new Koa();
+app.use(koaMiddleware(client));
+```
 
 ### Remix
 
@@ -107,6 +180,26 @@ Set `XRAYRADAR_DSN` and `XRAYRADAR_AUTH_TOKEN` in your environment; use a public
 ## Requirements
 
 Node 20+ for the Node/Next.js packages; modern browsers (ES2020) for the browser/React packages. React 17+ and Next.js 13+ where applicable.
+
+## Test coverage
+
+Tests and coverage run in CI on every push and pull request to `main`. To run tests with coverage locally from the repo root:
+
+```bash
+npm run test:coverage
+```
+
+To run coverage for a single package:
+
+```bash
+npm run test:coverage -w @xrayradar/core
+npm run test:coverage -w @xrayradar/node
+npm run test:coverage -w @xrayradar/browser
+```
+
+Vitest prints a coverage summary (lines, branches, functions) in the terminal. For an HTML report, open `packages/<package-name>/coverage/index.html` in a browser after running coverage for that package.
+
+For more on testing and coverage, see [TESTING.md](TESTING.md).
 
 ## Examples
 

@@ -1,7 +1,17 @@
 {
   "name": "@xrayradar/browser",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "XrayRadar SDK for browser",
+  "keywords": [
+    "xrayradar",
+    "error-tracking",
+    "observability",
+    "monitoring",
+    "sdk",
+    "browser",
+    "javascript",
+    "typescript"
+  ],
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -18,13 +28,18 @@
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts --clean",
     "test": "vitest run --passWithNoTests",
+    "test:coverage": "vitest run --coverage --passWithNoTests",
     "lint": "eslint src",
     "clean": "rm -rf dist"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "dependencies": {
     "@xrayradar/core": "*"
   },
   "devDependencies": {
+    "happy-dom": "^20.5.0",
     "tsup": "^8.0.0",
     "typescript": "^5.3.3",
     "vitest": "^4.0.0"

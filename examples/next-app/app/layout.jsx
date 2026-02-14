@@ -3,7 +3,7 @@
 import { init, ErrorBoundary } from "@xrayradar/react";
 
 const dsn =
-  process.env.NEXT_PUBLIC_XRAYRADAR_DSN || "https://your-server.com/your_project_id";
+  process.env.NEXT_PUBLIC_XRAYRADAR_DSN || "https://xrayradar.com/your_project_id";
 const authToken = process.env.NEXT_PUBLIC_XRAYRADAR_AUTH_TOKEN || "";
 
 if (typeof window !== "undefined") {

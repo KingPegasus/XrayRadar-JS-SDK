@@ -34,6 +34,12 @@ function parseStack(err: Error): StackFrame[] {
       filename = m[2];
       lineno = parseInt(m[3] ?? "0", 10) || 0;
       colno = parseInt(m[4] ?? "0", 10) || undefined;
+    } else if (m[2] !== undefined) {
+      // "at file:line:col" (first alternative matched, no function name)
+      functionName = "?";
+      filename = m[2];
+      lineno = parseInt(m[3] ?? "0", 10) || 0;
+      colno = parseInt(m[4] ?? "0", 10) || undefined;
     } else if (m[5] !== undefined) {
       filename = m[5];
       lineno = parseInt(m[6] ?? "0", 10) || 0;

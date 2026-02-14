@@ -5,6 +5,7 @@ import {
   shouldSample,
   normalizeLevel,
   type ClientOptions,
+  type CaptureContextOptions,
   type EventPayload,
   type Level,
   type Transport,
@@ -89,16 +90,17 @@ export class NodeClient {
 
   captureException(
     error: Error,
-    options?: { level?: Level; message?: string }
+    options?: { level?: Level; message?: string } & CaptureContextOptions
   ): string | null {
     if (!this._enabled) return null;
     if (!shouldSample(this.options.sampleRate)) return null;
     const level = options?.level ?? "error";
+    const scope = options?.context || options?.breadcrumbs ? this._scopeForCapture(options) : this.scope;
     let payload = eventFromException(
       error,
       level,
       options?.message,
-      this.scope
+      scope
     );
     const after = this.options.beforeSend(payload);
     if (after === null) return null;
@@ -124,12 +126,13 @@ export class NodeClient {
 
   captureMessage(
     message: string,
-    options?: { level?: Level }
+    options?: { level?: Level } & CaptureContextOptions
   ): string | null {
     if (!this._enabled) return null;
     if (!shouldSample(this.options.sampleRate)) return null;
     const level = normalizeLevel(options?.level ?? "error");
-    let payload = eventFromMessage(message, level, this.scope);
+    const scope = options?.context || options?.breadcrumbs ? this._scopeForCapture(options) : this.scope;
+    let payload = eventFromMessage(message, level, scope);
     const after = this.options.beforeSend(payload);
     if (after === null) return null;
     const applyAndSend = (resolved: EventPayload) => {
@@ -192,6 +195,23 @@ export class NodeClient {
     this.flush();
     if (this._transport.close) this._transport.close();
     this._removeGlobalHandlers();
+  }
+
+  private _scopeForCapture(options?: CaptureContextOptions): Scope {
+    const s = this.scope.clone();
+    if (options?.context) s.applyToContext(options.context);
+    if (options?.breadcrumbs) {
+      for (const b of options.breadcrumbs) {
+        s.addBreadcrumb(b.message, {
+          category: b.category,
+          level: b.level,
+          data: b.data,
+          type: b.type,
+          timestamp: b.timestamp,
+        });
+      }
+    }
+    return s;
   }
 
   private _installGlobalHandlers(): void {

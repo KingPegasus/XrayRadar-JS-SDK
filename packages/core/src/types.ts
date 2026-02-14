@@ -98,6 +98,64 @@ export interface Transport {
   close?(): void | Promise<void>;
 }
 
+export interface BrowserIntegrationFetchOptions {
+  /**
+   * Add breadcrumbs for fetch requests.
+   * Default: true
+   */
+  breadcrumbs?: boolean;
+  /**
+   * Capture exceptions for failed fetches (network errors and/or bad status codes).
+   * Default: false
+   */
+  captureErrors?: boolean;
+  /**
+   * Status codes to treat as errors when captureErrors is enabled.
+   * Default: [500, 599] range
+   */
+  captureStatusCodes?: Array<number | [number, number]>;
+}
+
+export interface BrowserIntegrationXhrOptions {
+  breadcrumbs?: boolean;
+  captureErrors?: boolean;
+  captureStatusCodes?: Array<number | [number, number]>;
+}
+
+export interface BrowserIntegrationHistoryOptions {
+  /**
+   * Add navigation breadcrumbs for pushState/replaceState/popstate.
+   * Default: true
+   */
+  breadcrumbs?: boolean;
+}
+
+export interface BrowserIntegrationConsoleOptions {
+  /**
+   * Add console breadcrumbs for console.(debug|info|warn|error).
+   * Default: true
+   */
+  breadcrumbs?: boolean;
+}
+
+export interface BrowserIntegrationsOptions {
+  fetch?: boolean | BrowserIntegrationFetchOptions;
+  xhr?: boolean | BrowserIntegrationXhrOptions;
+  history?: boolean | BrowserIntegrationHistoryOptions;
+  console?: boolean | BrowserIntegrationConsoleOptions;
+}
+
+export interface CaptureContextOptions {
+  /**
+   * Extra context applied only for this capture (does not mutate the global scope).
+   */
+  context?: Partial<EventContexts>;
+  /**
+   * Additional breadcrumbs to append only for this capture.
+   */
+  breadcrumbs?: BreadcrumbData[];
+}
+
 export interface ClientOptions {
   dsn?: string;
   authToken?: string;
@@ -109,4 +167,9 @@ export interface ClientOptions {
   maxBreadcrumbs?: number;
   beforeSend?: (event: EventPayload) => EventPayload | null | Promise<EventPayload | null>;
   transport?: Transport;
+  /**
+   * Optional browser auto-instrumentation (breadcrumbs / auto-capture).
+   * Node clients will ignore these options.
+   */
+  integrations?: BrowserIntegrationsOptions | true;
 }
