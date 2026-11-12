@@ -31,6 +31,14 @@
     "type": "git",
     "url": "https://github.com/KingPegasus/XrayRadar-JS-SDK.git"
   },
+  "homepage": "https://rhymesolutions.com/work/xrayradar",
+  "bugs": {
+    "url": "https://github.com/KingPegasus/XrayRadar-JS-SDK/issues"
+  },
+  "author": {
+    "name": "Rhyme Solutions",
+    "url": "https://rhymesolutions.com"
+  },
   "publishConfig": {
     "access": "public"
   }

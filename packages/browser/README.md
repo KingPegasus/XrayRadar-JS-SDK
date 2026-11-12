@@ -71,3 +71,7 @@ init({
 ```
 
 For React (ErrorBoundary, Provider, hooks), use **@xrayradar/react**. Full docs: [XrayRadar-JS-SDK](https://github.com/KingPegasus/XrayRadar-JS-SDK#readme).
+
+---
+
+XrayRadar is built and maintained by [Rhyme Solutions](https://rhymesolutions.com). Read the [XrayRadar case study](https://rhymesolutions.com/work/xrayradar).

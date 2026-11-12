@@ -208,3 +208,7 @@ Runable examples (Node CLI, Vite + React, Next.js) are in [examples/](examples/)
 For security practices, audit, and reporting vulnerabilities: see [SECURITY.md](SECURITY.md).
 
 Contributing (build, test, versioning, releases): see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+---
+
+XrayRadar is built and maintained by [Rhyme Solutions](https://rhymesolutions.com). Read the [XrayRadar case study](https://rhymesolutions.com/work/xrayradar).
