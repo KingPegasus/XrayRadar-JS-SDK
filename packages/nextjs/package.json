@@ -43,9 +43,9 @@
     "@xrayradar/react": "*"
   },
   "devDependencies": {
-    "tsup": "^8.0.0",
-    "typescript": "^5.3.3",
-    "vitest": "^4.0.0"
+    "tsup": "^9.0.0",
+    "typescript": "^6.0.3",
+    "vitest": "^5.1.0"
   },
   "peerDependencies": {
     "next": ">=13.0.0"
