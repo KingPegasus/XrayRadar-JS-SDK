@@ -11,7 +11,7 @@ npm run lint
 
 ## Compatibility
 
-- **Node:** Developing (build, lint, test) needs Node `^22.12` or `>=24` (Vitest 5). CI runs on Node 24. The published packages still support Node 20+ at runtime.
+- **Node:** Use Node 24 for development (pinned in `.nvmrc`; run `nvm use`). CI and publishing read the same `.nvmrc`. The published packages still support Node 20+ at runtime.
 - **Browsers:** Output is ES2020; works in current Chrome, Firefox, Safari, Edge and other ES2020‑capable environments.
 - **React:** `>=17` (peer). Next.js: `>=13` (peer).
 
