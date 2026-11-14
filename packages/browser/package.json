@@ -39,13 +39,21 @@
     "@xrayradar/core": "*"
   },
   "devDependencies": {
-    "happy-dom": "^20.5.0",
-    "tsup": "^8.0.0",
-    "typescript": "^5.3.3",
-    "vitest": "^4.0.0"
+    "happy-dom": "^21.0.4",
+    "tsup": "^9.0.0",
+    "typescript": "^6.0.3",
+    "vitest": "^5.1.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/KingPegasus/XrayRadar-JS-SDK.git"
+  },
+  "homepage": "https://rhymesolutions.com/work/xrayradar",
+  "bugs": {
+    "url": "https://github.com/KingPegasus/XrayRadar-JS-SDK/issues"
+  },
+  "author": {
+    "name": "Rhyme Solutions",
+    "url": "https://rhymesolutions.com"
   }
 }

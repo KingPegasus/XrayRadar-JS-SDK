@@ -13,13 +13,13 @@
     "clean": "npm run clean --workspaces --if-present"
   },
   "devDependencies": {
-    "@vitest/coverage-v8": "^4.0.0",
-    "typescript": "^5.6.0",
-    "vitest": "^4.0.0",
-    "eslint": "^9.0.0",
-    "@eslint/js": "^9.0.0",
-    "typescript-eslint": "^8.0.0",
-    "@types/node": "^20.10.0"
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.19.2",
+    "@vitest/coverage-v8": "^5.1.0",
+    "eslint": "^10.14.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.72.2",
+    "vitest": "^5.1.0"
   },
   "engines": {
     "node": ">=20"
@@ -31,7 +31,20 @@
     "type": "git",
     "url": "https://github.com/KingPegasus/XrayRadar-JS-SDK.git"
   },
+  "homepage": "https://rhymesolutions.com/work/xrayradar",
+  "bugs": {
+    "url": "https://github.com/KingPegasus/XrayRadar-JS-SDK/issues"
+  },
+  "author": {
+    "name": "Rhyme Solutions",
+    "url": "https://rhymesolutions.com"
+  },
   "publishConfig": {
     "access": "public"
+  },
+  "overrides": {
+    "@typescript-eslint/typescript-estree": {
+      "minimatch": "^11.0.8"
+    }
   }
 }

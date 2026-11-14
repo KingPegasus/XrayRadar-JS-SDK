@@ -86,3 +86,7 @@ module.exports = withXrayRadarConfig(yourExistingConfig);
 ```
 
 This is a no-op placeholder for future Next.js-specific config (e.g. source maps, rewrites).
+
+---
+
+XrayRadar is built and maintained by [Rhyme Solutions](https://rhymesolutions.com). Read the [XrayRadar case study](https://rhymesolutions.com/work/xrayradar).

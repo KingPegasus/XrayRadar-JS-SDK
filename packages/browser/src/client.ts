@@ -14,8 +14,6 @@ import {
 import { HttpTransport } from "./transport.js";
 import { instrumentConsole, instrumentFetch, instrumentHistory, instrumentXhr, type Uninstall } from "./integrations/index.js";
 
-declare let globalThis: { XRAYRADAR_AUTH_TOKEN?: string };
-
 let globalClient: BrowserClient | null = null;
 
 export class BrowserClient {
@@ -49,7 +47,7 @@ export class BrowserClient {
       (options.dsn ? new HttpTransport(options.dsn, { authToken: options.authToken }) : { sendEvent: () => {} });
     const authToken =
       options.authToken ??
-      (typeof globalThis !== "undefined" ? globalThis.XRAYRADAR_AUTH_TOKEN : "") ??
+      (typeof globalThis !== "undefined" ? (globalThis as unknown as { XRAYRADAR_AUTH_TOKEN?: string }).XRAYRADAR_AUTH_TOKEN : "") ??
       "";
     this.options = {
       dsn: options.dsn ?? "",
